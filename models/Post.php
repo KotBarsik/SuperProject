@@ -13,6 +13,25 @@ class Post
         $this->pdo = db::connect();
     }
 
+    public function savePost($data){
+        $prepare = $this->pdo->prepare("
+            INSERT INTO `posts` 
+            (`data`, `provider`, `status`, `uptime`,`publish_time`) VALUES 
+            (:data,:provider,:status,:uptime,:publish_time)
+        ");
+
+        $time = date('Y-m-d H:i:s',time());
+
+        $prepare->bindParam(':data', json_encode($data['img']));
+        $prepare->bindParam(':provider',$data['type']);
+        $prepare->bindParam(':status',$data['status']);
+        $prepare->bindParam(':uptime',$time);
+        $prepare->bindParam(':publish_time',$data['time']);
+        $execute = $prepare->execute();
+
+        exit();
+    }
+
     public function byPostTelegram($status){
         $prepare = $this->pdo->prepare('SELECT * FROM posts WHERE status=:status');
         $prepare->bindParam(':status', $status, \PDO::PARAM_STR);
