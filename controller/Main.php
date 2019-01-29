@@ -7,13 +7,13 @@ use models\Post;
 
 class Main
 {
-    protected $provider = ['telegram', 'fb'];
+    protected $provider = ['telegram', 'facebook'];
 
     public function main(){
         $post = new Post();
-        $status = $post->byPostTelegram('sending');
+        $status = $post->allPosts();
         $view = new view();
-        $view->render('index');
+        $view->render('index',[$status]);
     }
 
     public function telegram()
@@ -25,10 +25,9 @@ class Main
 
     public function add()
     {
-        $type = preg_replace('/[^A-z]/ui', '', $_GET['type']);
-        if (is_numeric(array_search($type, $this->provider)) && empty($_POST)) {
+        if (empty($_POST)) {
             $view = new view();
-            $view->render('add', ['type' => $type]);
+            $view->render('add');
         } else {
             $data = [];
             if (isset($_FILES['pic'])) {

@@ -29,15 +29,24 @@ class Post
         $prepare->bindParam(':publish_time',$data['time']);
         $execute = $prepare->execute();
 
-        exit();
+        return $execute;
     }
 
-    public function byPostTelegram($status){
-        $prepare = $this->pdo->prepare('SELECT * FROM posts WHERE status=:status');
-        $prepare->bindParam(':status', $status, \PDO::PARAM_STR);
+    public function allPosts(){
+        $prepare = $this->pdo->prepare('SELECT * FROM posts');
+        //$prepare = $this->pdo->prepare('SELECT * FROM posts WHERE status=:status');
+        ///$prepare->bindParam(':status', $status, \PDO::PARAM_STR);
         $prepare->execute();
         $result = $prepare->fetch(\PDO::FETCH_ASSOC);
 
+        return $result;
+    }
+
+    public function postById($id){
+        $prepare = $this->pdo->prepare('SELECT * FROM posts WHERE id=:id');
+        $prepare->bindParam(':id', $id, \PDO::PARAM_INT);
+        $prepare->execute();
+        $result = $prepare->fetch(\PDO::FETCH_ASSOC);
         return $result;
     }
 }
