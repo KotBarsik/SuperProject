@@ -1,5 +1,6 @@
 <?php
 namespace controller;
+use component\view;
 use models\Post;
 
 class Main
@@ -11,6 +12,7 @@ class Main
     }
 
     public function add(){
-        echo 'Добавить пост??';
+        $view = new view();
+        $view->render('add',array(['d']));
     }
 }
