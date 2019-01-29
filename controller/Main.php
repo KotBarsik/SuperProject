@@ -42,7 +42,7 @@ class Main
             }
             $data['time'] = isset($_POST['time']) ? $_POST['time'] : null;
             $data['type'] = isset($_POST['type']) ? $_POST['type'] : null;
-            $data['desc'] = isset($_POST['desc']) ? $_POST['desc'] : null;
+            $data['message'] = isset($_POST['desc']) ? $_POST['desc'] : null;
             $data['time'] = isset($_POST['time']) ? $_POST['time'] : null;
             $data['status'] = 'pending';
             $post = new Post();
