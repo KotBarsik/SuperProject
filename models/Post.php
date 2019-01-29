@@ -37,7 +37,7 @@ class Post
         //$prepare = $this->pdo->prepare('SELECT * FROM posts WHERE status=:status');
         ///$prepare->bindParam(':status', $status, \PDO::PARAM_STR);
         $prepare->execute();
-        $result = $prepare->fetch(\PDO::FETCH_ASSOC);
+        $result = $prepare->fetchAll(\PDO::FETCH_ASSOC);
 
         return $result;
     }

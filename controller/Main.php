@@ -13,7 +13,7 @@ class Main
         $post = new Post();
         $status = $post->allPosts();
         $view = new view();
-        $view->render('index',[$status]);
+        $view->render('index',$status);
     }
 
     public function telegram()
