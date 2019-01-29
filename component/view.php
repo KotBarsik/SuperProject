@@ -13,8 +13,9 @@ class view
 {
     protected $viewPath = IndexPath.'/view/';
 
-    public function render($view,$data){
+    public function render($view,$data = []){
         $this->head();
+        $this->menu();
         $this->load($view,$data);
         $this->footer();
     }
@@ -25,6 +26,10 @@ class view
 
     protected function footer(){
         $this->load('footer');
+    }
+
+    protected function menu(){
+        $this->load('menu');
     }
 
     protected function load($view,$data = []){

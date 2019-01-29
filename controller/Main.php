@@ -9,6 +9,13 @@ class Main
 {
     protected $provider = ['telegram', 'fb'];
 
+    public function main(){
+        $post = new Post();
+        $status = $post->byPostTelegram('sending');
+        $view = new view();
+        $view->render('index');
+    }
+
     public function telegram()
     {
         $post = new Post();
