@@ -11,7 +11,8 @@ class Postman
 
         foreach ($pending as $index=>$value){
             $map = [
-                'messages' => $value['']
+                'img' => json_decode($value['data'],true),
+                'message' => $value['message']
             ];
         }
         exit(time());

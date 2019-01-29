@@ -16,13 +16,14 @@ class Post
     public function savePost($data){
         $prepare = $this->pdo->prepare("
             INSERT INTO `posts` 
-            (`data`, `message`, `provider`, `status`, `uptime`,`publish_time`) VALUES 
-            (:data,:message,:provider,:status,:uptime,:publish_time)
+            (`data`,`pubId`, `message`, `provider`, `status`, `uptime`,`publish_time`) VALUES 
+            (:data,:pubId,:message,:provider,:status,:uptime,:publish_time)
         ");
 
         $time = date('Y-m-d H:i:s',time());
 
         $prepare->bindParam(':data', json_encode($data['img']));
+        $prepare->bindParam(':pubId',$data['pubId']);
         $prepare->bindParam(':message',$data['message']);
         $prepare->bindParam(':provider',$data['type']);
         $prepare->bindParam(':status',$data['status']);

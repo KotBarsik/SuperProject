@@ -40,13 +40,17 @@ class Main
                     }
                 }
             }
+            $data['pubId'] = isset($_POST['pubId']) ? $_POST['pubId'] : null;
             $data['time'] = isset($_POST['time']) ? $_POST['time'] : null;
             $data['type'] = isset($_POST['type']) ? $_POST['type'] : null;
             $data['message'] = isset($_POST['desc']) ? $_POST['desc'] : null;
             $data['time'] = isset($_POST['time']) ? $_POST['time'] : null;
             $data['status'] = 'pending';
             $post = new Post();
-            $post->savePost($data);
+            $result = $post->savePost($data);
+            if($result){
+                echo '<a href="/index.php?controller=main&method=main">Ваш пост поставлен в очередь на публикацию</a>';
+            }
         }
     }
 }

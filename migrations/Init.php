@@ -26,6 +26,7 @@ class Init
                 `posts` (
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `data` JSON NOT NULL,
+                    `pubId` CHARACTER(225) NOT NULL,
                     `message` CHARACTER(225) NOT NULL,
                     `provider` CHARACTER(15) NOT NULL,
                     `status` CHARACTER(15) NOT NULL,

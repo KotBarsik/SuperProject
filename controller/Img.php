@@ -1,8 +1,6 @@
 <?php
 
 namespace controller;
-
-use component\view;
 use models\Post;
 
 class Img

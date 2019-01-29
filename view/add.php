@@ -16,6 +16,7 @@
             <option value="facebook">facebook</option>
         </select>
     </div>
+    <div class="block"><div class="name">Идонтификатор паблика</div><input name="pubId"/></div>
     <div class="block"><div class="name">Время публикации</div><input name="time" type="datetime-local"/></div>
     <div class="block"><div class="name">Пикча</div><input type="file" name="pic[]" min="1" max="5" multiple="true"/></div>
     <div class="block"><div class="name">Текст</div><textarea name="desc"></textarea></div>
