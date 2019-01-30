@@ -44,7 +44,11 @@ class Postman
                     'publish_time' => $value['publish_time']
                 ];
 
-                ${$value['provider']}->messages($map);
+                $send = ${$value['provider']}->messages($map);
+
+                if($send){
+                    $post->updateStatusByID($value['id'],'send');
+                }
             }
         }
     }

@@ -59,4 +59,15 @@ class Post
 
         return $result;
     }
+
+    public function updateStatusByID($id,$status){
+        $prepare = $this->pdo->prepare("
+            UPDATE `posts` set `status` = :status where id=:id
+        ");
+
+        $prepare->bindParam(':id', $id, \PDO::PARAM_INT);
+        $prepare->bindParam(':status', $status);
+        $execute = $prepare->execute();
+        return $execute;
+    }
 }

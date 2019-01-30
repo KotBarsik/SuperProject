@@ -17,18 +17,20 @@ class Parse
         $telegram = new Telegram();
         $updateData = json_decode($telegram->getUpdates(),true);
 
-        $update = new Updates();
-        $lastUpdateId = $update->lastUpdateId();
-        foreach ($updateData['result'] as $uid => $uval){
-            $updateId = (int)$uval['update_id'];
-            if($updateId > $lastUpdateId) {
-                if(isset($uval['channel_post']['document'])){
-                    $uval['file'] = $telegram->getFile($uval['channel_post']['document']['file_id']);
+        if(!is_null($updateData)) {
+            $update = new Updates();
+            $lastUpdateId = $update->lastUpdateId();
+            foreach ($updateData['result'] as $uid => $uval) {
+                $updateId = (int)$uval['update_id'];
+                if ($updateId > $lastUpdateId) {
+                    if (isset($uval['channel_post']['document'])) {
+                        $uval['file'] = $telegram->getFile($uval['channel_post']['document']['file_id']);
+                    }
+                    $update->save([
+                        'data' => $uval,
+                        'update_id' => $updateId
+                    ]);
                 }
-                $update->save([
-                    'data' => $uval,
-                    'update_id' => $updateId
-                ]);
             }
         }
     }

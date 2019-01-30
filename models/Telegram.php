@@ -20,10 +20,10 @@ class Telegram
 
     public function messages($data){
         if(count($data['img']) >= 1){
-            $this->sendPhoto($data);
+            return $this->sendPhoto($data);
         }
         else{
-            $this->sendMessage($data);
+            return $this->sendMessage($data);
         }
     }
 
@@ -57,9 +57,13 @@ class Telegram
             $build['photo'] = new \CURLFile($picName['name'].'.'.$picName['format']);
         }
 
+        $tmpPic = $build['photo']->name;
+
         $url = $this->url.$this->token.__FUNCTION__;
 
         $result = $this->http->send($url,$build);
+
+        unlink($tmpPic);
 
         return $result;
     }
