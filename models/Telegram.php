@@ -30,6 +30,12 @@ class Telegram
         return $this->http->send($url);
     }
 
+    public function getFile($file_id){
+        $url = $this->url.$this->token.__FUNCTION__;
+
+        return $this->http->send($url,['file_id' => $file_id]);
+    }
+
     private function sendMediaGroup($data){
         $build = [
             'chat_id' => $data['pubId'],

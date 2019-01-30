@@ -3,6 +3,7 @@ namespace command;
 
 use models\Post;
 use models\Telegram;
+use models\Updates;
 
 class Parse
 {
@@ -14,8 +15,21 @@ class Parse
 
     public function telegram(){
         $telegram = new Telegram();
-        $update = json_decode($telegram->getUpdates(),true);
+        $updateData = json_decode($telegram->getUpdates(),true);
 
-        exit();
+        $update = new Updates();
+        $lastUpdateId = $update->lastUpdateId();
+        foreach ($updateData['result'] as $uid => $uval){
+            $updateId = (int)$uval['update_id'];
+            if($updateId > $lastUpdateId) {
+                if(isset($uval['channel_post']['document'])){
+
+                }
+                $update->save([
+                    'data' => $uval,
+                    'update_id' => $updateId
+                ]);
+            }
+        }
     }
 }
