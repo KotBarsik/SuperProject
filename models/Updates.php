@@ -31,11 +31,26 @@ class Updates
         return $execute;
     }
 
+    public function all(){
+        $prepare = $this->pdo->prepare('SELECT * FROM updates');
+        $prepare->execute();
+        $result = $prepare->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function lastUpdateId(){
         $prepare = $this->pdo->prepare('SELECT max(update_id) as max FROM updates');
         $prepare->execute();
         $result = $prepare->fetch(\PDO::FETCH_ASSOC);
 
         return isset($result['max']) ? (int)$result['max'] : 0;
+    }
+
+    public function byId($id){
+        $prepare = $this->pdo->prepare('SELECT * FROM updates WHERE update_id=:update_id');
+        $prepare->bindParam(':update_id', $id, \PDO::PARAM_INT);
+        $prepare->execute();
+        $result = $prepare->fetch(\PDO::FETCH_ASSOC);
+        return $result;
     }
 }

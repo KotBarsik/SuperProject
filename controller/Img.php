@@ -2,22 +2,35 @@
 
 namespace controller;
 use models\Post;
+use models\Updates;
 
 class Img
 {
     public function get()
     {
-        list($id,$index) = explode('|',$_GET['id']);
+        if(empty($_GET['type'])) {
+            list($id, $index) = explode('|', $_GET['id']);
 
-        $post = new Post();
-        $data = $post->postById((int)$id);
+            $post = new Post();
+            $data = $post->postById((int)$id);
 
-        $img = json_decode($data['data'],true);
+            $img = json_decode($data['data'], true);
 
-        if(isset($img[$index])){
-            $this->renderImg($img[$index]);
+            if(isset($img[$index])){
+                $this->renderImg($img[$index]);
+            }
         }
+        elseif($_GET['type'] == 'updates'){
+            $post = new Updates();
+            $data = $post->byId((int)$_GET['id']);
 
+            $img = json_decode($data['data'], true);
+
+            if(isset($img['file'])){
+                $img['data'] = $img['file'];
+                $this->renderImg($img);
+            }
+        }
     }
 
     public function renderImg($img){

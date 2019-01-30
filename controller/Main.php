@@ -4,6 +4,7 @@ namespace controller;
 
 use component\view;
 use models\Post;
+use models\Updates;
 
 class Main
 {
@@ -14,6 +15,13 @@ class Main
         $status = $post->allPosts();
         $view = new view();
         $view->render('index',$status);
+    }
+
+    public function tic(){
+        $updates = new Updates();
+        $all = $updates->all();
+        $view = new view();
+        $view->render('tic',$all);
     }
 
     public function telegram()
