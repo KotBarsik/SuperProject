@@ -15,8 +15,9 @@ class Init
     }
 
     public function up(){
-        $this->posts();
-        $this->users();
+        //$this->posts();
+        ///$this->users();
+        $this->updates();
     }
 
     private function posts(){
@@ -48,6 +49,24 @@ class Init
                     `id` INT(11) NOT NULL AUTO_INCREMENT,
                     `data` JSON NOT NULL,
                     `provider` CHARACTER(15) NOT NULL,
+                    `uptime` TIMESTAMP,
+                    `create_time` TIMESTAMP,
+                    PRIMARY KEY(`id`)
+                )
+            ");
+        }catch (\Exception $e){
+            print_r($e->getMessage());
+        }
+    }
+
+    private function updates(){
+        try {
+            $result = $this->pdo->query("
+              CREATE TABLE
+                `updates` (
+                    `id` INT(11) NOT NULL AUTO_INCREMENT,
+                    `data` JSON NOT NULL,
+                    `update_id` INT(11),
                     `uptime` TIMESTAMP,
                     `create_time` TIMESTAMP,
                     PRIMARY KEY(`id`)

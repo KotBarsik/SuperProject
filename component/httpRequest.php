@@ -7,7 +7,7 @@ class httpRequest
 
     public $info;
 
-    public function send($url,$data){
+    public function send($url,$data = []){
         $curl = curl_init($url);
         curl_setopt_array($curl, array(
             CURLOPT_POST => true,

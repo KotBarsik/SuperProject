@@ -24,6 +24,12 @@ class Telegram
         }
     }
 
+    public function getUpdates(){
+        $url = $this->url.$this->token.__FUNCTION__;
+
+        return $this->http->send($url);
+    }
+
     private function sendMediaGroup($data){
         $build = [
             'chat_id' => $data['pubId'],
@@ -35,12 +41,12 @@ class Telegram
             $picName = $this->createTmpFile($img['name'],base64_decode($img['data']));
             $media[] = [
                 'type' => 'photo',
-                'media' => 'attach://@'.$picName['name'].'.'.$picName['format'],
+                'media' => 'attach://'.$picName['name'].'.'.$picName['format'],
                 'caption' => ' '
             ];
             $media[] = [
                 'type' => 'photo',
-                'media' => 'attach://@'.$picName['name'].'.'.$picName['format'],
+                'media' => 'attach://'.$picName['name'].'.'.$picName['format'],
                 'caption' => ' '
             ];///new \CURLFile($picName['name'].'.'.$picName['format']);//'@'.$picName['name'].'.'.$picName['format'];///[] = curl_file_create($picName['name'].'.'.$picName['format'],$picName['mime'],$picName['name']);
         }
