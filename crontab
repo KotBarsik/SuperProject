@@ -1,0 +1,5 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+*/3 * * * * root php /var/www/app.php Parse telegram
+*/30 * * * * root php /var/www/app.php Sql dump
