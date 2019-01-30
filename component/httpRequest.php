@@ -13,8 +13,9 @@ class httpRequest
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_POSTFIELDS => $data
+            CURLOPT_SSL_VERIFYHOST => true,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => array("Content-Type:multipart/form-data")
         ));
 
         $result = curl_exec($curl);

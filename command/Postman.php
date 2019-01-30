@@ -2,6 +2,7 @@
 namespace command;
 
 use models\Post;
+use models\Telegram;
 
 class Postman
 {
@@ -14,6 +15,8 @@ class Postman
     public function send(){
         $post = new Post();
         $pending = $post->postByPending();
+
+        $telegram = new Telegram();
 
         foreach ($pending as $index=>$value){
             $send = false;
@@ -35,10 +38,13 @@ class Postman
             if($send) {
                 $map = [
                     'img' => json_decode($value['data'], true),
+                    'provider' => $value['provider'],
                     'message' => $value['message'],
                     'pubId' => $value['pubId'],
                     'publish_time' => $value['publish_time']
                 ];
+
+                ${$value['provider']}->messages($map);
             }
         }
     }
