@@ -20,7 +20,10 @@ class Telegram
 
     public function messages($data){
         if(count($data['img']) >= 1){
-            $this->sendMediaGroup($data);
+            $this->sendPhoto($data);
+        }
+        else{
+            $this->sendMessage($data);
         }
     }
 
@@ -43,32 +46,35 @@ class Telegram
         return null;
     }
 
-    private function sendMediaGroup($data){
+    private function sendPhoto($data){
         $build = [
+            'caption' => $data['message'],
             'chat_id' => $data['pubId'],
         ];
 
-        $media = [];
-
         foreach ($data['img'] as $img){
             $picName = $this->createTmpFile($img['name'],base64_decode($img['data']));
-            $media[] = [
-                'type' => 'photo',
-                'media' => 'attach://'.$picName['name'].'.'.$picName['format'],
-                'caption' => ' '
-            ];
-            $media[] = [
-                'type' => 'photo',
-                'media' => 'attach://'.$picName['name'].'.'.$picName['format'],
-                'caption' => ' '
-            ];///new \CURLFile($picName['name'].'.'.$picName['format']);//'@'.$picName['name'].'.'.$picName['format'];///[] = curl_file_create($picName['name'].'.'.$picName['format'],$picName['mime'],$picName['name']);
+            $build['photo'] = new \CURLFile($picName['name'].'.'.$picName['format']);
         }
-
-        $build['media'] = json_encode($media,JSON_UNESCAPED_SLASHES);
 
         $url = $this->url.$this->token.__FUNCTION__;
 
         $result = $this->http->send($url,$build);
+
+        return $result;
+    }
+
+    private function sendMessage($data){
+        $build = [
+            'text' => $data['message'],
+            'chat_id' => $data['pubId'],
+        ];
+
+        $url = $this->url.$this->token.__FUNCTION__;
+
+        $result = $this->http->send($url,$build);
+
+        return $result;
     }
 
     public function createTmpFile($name,$pic){
