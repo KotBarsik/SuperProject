@@ -33,7 +33,14 @@ class Telegram
     public function getFile($file_id){
         $url = $this->url.$this->token.__FUNCTION__;
 
-        return $this->http->send($url,['file_id' => $file_id]);
+        $result = json_decode($this->http->send($url,['file_id' => $file_id]),true);
+        if($result['result']){
+            $url = $this->url.'file/'.$this->token.$result['result']['file_path'];
+            $result = base64_encode(file_get_contents($url));
+            return $result;
+        }
+
+        return null;
     }
 
     private function sendMediaGroup($data){

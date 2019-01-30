@@ -23,7 +23,7 @@ class Parse
             $updateId = (int)$uval['update_id'];
             if($updateId > $lastUpdateId) {
                 if(isset($uval['channel_post']['document'])){
-
+                    $uval['file'] = $telegram->getFile($uval['channel_post']['document']['file_id']);
                 }
                 $update->save([
                     'data' => $uval,
